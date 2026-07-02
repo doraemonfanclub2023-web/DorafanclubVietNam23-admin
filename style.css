@@ -303,3 +303,88 @@ body.login-body {
 .table tr:hover td {
     background-color: #f8fafc;
 }
+/* ====================================================
+   4. ĐỊNH DẠNG CHO FORM QUẢN LÝ TÀI KHOẢN (DASHBOARD)
+   ==================================================== */
+/* Khung bọc khu vực thêm tài khoản mới */
+.account-form-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    margin-bottom: 25px;
+}
+
+.account-form-box h3 {
+    color: #1976d2;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+/* Group xếp ngang các ô nhập liệu inline */
+.inline-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Định dạng các ô input và select trong dashboard */
+.inline-form input, 
+.inline-form select {
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    min-width: 160px;
+    flex: 1;
+}
+
+.inline-form input:focus, 
+.inline-form select:focus {
+    border-color: #1976d2;
+    outline: none;
+}
+
+/* Nút tạo tài khoản */
+.btn-create {
+    background-color: #15803d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.btn-create:hover {
+    background-color: #166534;
+}
+
+/* Nút xóa tài khoản trong bảng */
+.btn-delete {
+    background-color: #dc2626;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background-color: #991b1b;
+}
+
+/* Nhãn trạng thái mặc định không được xóa */
+.badge-default {
+    color: #64748b;
+    font-style: italic;
+    font-size: 13px;
+}
