@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Dora Fanclub Việt Nam</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="loadDashboard()">
+
+<header class="header">
+
+    <h2>DORA FANCLUB VIỆT NAM</h2>
+
+    <div class="user-box">
+        Xin chào,
+        <span id="userName"></span>
+    </div>
+
+</header>
+
+<div class="container">
+
+    <!-- MENU -->
+
+    <aside class="sidebar">
+
+        <ul>
+
+            <li><a href="#" onclick="showPage('home')">🏠 Trang chủ</a></li>
+
+            <li><a href="#" onclick="showPage('members')">👥 Thành viên</a></li>
+
+            <li><a href="#" onclick="showPage('admins')">🛡️ Quản lý Admin</a></li>
+
+            <li><a href="#" onclick="showPage('notice')">📢 Thông báo</a></li>
+
+            <li><a href="#" onclick="showPage('game')">🎁 Mini Game</a></li>
+
+            <li><a href="#" onclick="showPage('setting')">⚙️ Cài đặt</a></li>
+
+            <li><a href="#" class="logout" onclick="logout()">🚪 Đăng xuất</a></li>
+
+        </ul>
+
+    </aside>
+
+    <!-- NỘI DUNG -->
+
+    <main class="content">
+
+        <!-- TRANG CHỦ -->
+
+        <section id="home" class="page">
+
+            <h2>Tổng quan</h2>
+
+            <br>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>👥 Thành viên</h3>
+                    <h1>125</h1>
+                </div>
+
+                <div class="card">
+                    <h3>🛡️ Admin</h3>
+                    <h1>5</h1>
+                </div>
+
+                <div class="card">
+                    <h3>📢 Thông báo</h3>
+                    <h1>12</h1>
+                </div>
+
+                <div class="card">
+                    <h3>🎁 Mini Game</h3>
+                    <h1>3</h1>
+                </div>
+
+            </div>
+
+            <div class="activity">
+
+                <h3>📋 Hoạt động gần đây</h3>
+
+                <ul>
+                    <li>BQT001 đăng nhập hệ thống.</li>
+                    <li>Nguyễn Thị Thảo Nhi thêm thành viên mới.</li>
+                    <li>Đăng thông báo Mini Game tháng 8.</li>
+                    <li>Cập nhật danh sách Admin.</li>
+                </ul>
+
+            </div>
+
+        </section>
+                <!-- THÀNH VIÊN -->
+
+        <section id="members" class="page" style="display:none;">
+
+            <h2>👥 Quản lý Thành viên</h2>
+
+            <br>
+
+            <div class="activity">
+
+                <table width="100%" border="1" cellspacing="0" cellpadding="10">
+
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ tên</th>
+                        <th>Vai trò</th>
+                    </tr>
+
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyễn Tuấn Khải</td>
+                        <td>Ban Quản Trị</td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Nguyễn Thị Thảo Nhi</td>
+                        <td>Admin</td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>Khánh Duy</td>
+                        <td>Admin</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- ADMIN -->
+
+        <section id="admins" class="page" style="display:none;">
+
+            <h2>🛡️ Quản lý Admin</h2>
+
+            <br>
+
+            <div class="activity">
+
+                <p>Danh sách Ban Quản Trị và Admin của Dora Fanclub Việt Nam.</p>
+
+                <ul>
+                    <li>Nguyễn Tuấn Khải - Ban Quản Trị</li>
+                    <li>Nguyễn Thị Thảo Nhi - Admin</li>
+                    <li>Khánh Duy - Admin</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <!-- THÔNG BÁO -->
+
+        <section id="notice" class="page" style="display:none;">
+
+            <h2>📢 Thông báo</h2>
+
+            <br>
+
+            <div class="activity">
+
+                <ul>
+                    <li>Mini Game tháng 8 sắp diễn ra.</li>
+                    <li>Tuyển thêm CTV cho Fanpage.</li>
+                    <li>Cập nhật nội quy hoạt động.</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <!-- MINI GAME -->
+
+        <section id="game" class="page" style="display:none;">
+
+            <h2>🎁 Mini Game</h2>
+
+            <br>
+
+            <div class="activity">
+
+                <p>Chưa có Mini Game đang diễn ra.</p>
+
+            </div>
+
+        </section>
+
+        <!-- CÀI ĐẶT -->
+
+        <section id="setting" class="page" style="display:none;">
+
+            <h2>⚙️ Cài đặt</h2>
+
+            <br>
+
+            <div class="activity">
+
+                <p>Phiên bản hệ thống: <b>v1.0</b></p>
+                <p>Dora Fanclub Việt Nam © 2026</p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
