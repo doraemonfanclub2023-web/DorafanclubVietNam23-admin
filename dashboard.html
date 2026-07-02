@@ -4,11 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ thống Quản lý Doraemon Fanclub</title>
-    <!-- Ô nhập tài khoản mới -->
-<input type="text" id="newUsername" placeholder="Tên đăng nhập (ví dụ: ADMIN001)..." autocomplete="off">
+    // 1. KHỞI TẠO DỮ LIỆU MẪU BAN ĐẦU (Nếu chưa có trong hệ thống)
+if (!localStorage.getItem('users')) {
+    const defaultUsers = [
+        { username: 'BQT001', password: '123', name: 'Nguyễn Tuấn Khải', role: 'Ban Quản Trị' },
+        { username: 'BQT002', password: '123', name: 'Cao Ngọc Duyên', role: 'Admin' }
+    ];
+    localStorage.setItem('users', JSON.stringify(defaultUsers));
+}
 
-<!-- Ô nhập mật khẩu mới -->
-<input type="password" id="newPassword" placeholder="Mật khẩu..." autocomplete="new-password">
+// 2. HÀM XỬ LÝ ĐĂNG NHẬP (Dùng cho index.html)
+function login() {
+    // Lấy giá trị user nhập vào ô input
+    const userInp = document.getElementById('username').value.trim();
+    const passInp = document.getElementById('password').value.trim();
+    const errorDiv = document.getElementById('error');
+
+    // Lấy danh sách tài khoản mới nhất từ LocalStorage ra để đối chiếu
+    const userList = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Tìm kiếm xem có tài khoản nào khớp cả username và password không
+    const validUser = userList.find(u => u.username === userInp && u.password === passInp);
+
+    if (validUser) {
+        // Lưu thông tin người đăng nhập thành công để hiển thị lời chào
+        localStorage.setItem('currentUser', JSON.stringify(validUser));
+        // Giấu thông báo lỗi (nếu có) và chuyển hướng vào trong
+        if (errorDiv) errorDiv.style.display = 'none';
+        window.location.href = "dashboard.html";
+    } else {
+        // Nếu sai, hiện khung thông báo màu đỏ
+        if (errorDiv) {
+            errorDiv.style.display = 'block';
+        }
+    }
+}
+
+// 3. HÀM HIỂN THỊ LỜI CHÀO Ở TRANG TRONG (Dùng cho dashboard.html)
+function displaySession() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const nameSpan = document.getElementById('userName');
+    if (currentUser && nameSpan) {
+        nameSpan.innerText = `${currentUser.name} (${currentUser.role})`;
+    }
+}
+
+// 4. HÀM ĐĂNG XUẤT
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = "index.html";
+}
+
+// Tự động chạy hàm kiểm tra lời chào khi load trang quản trị
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('userName')) {
+        displaySession();
+    }
+});
     <!-- Thẻ này phải viết chuẩn như thế này -->
     <link rel="stylesheet" href="style.css">
 </head>
