@@ -102,7 +102,6 @@ function loadDashboard() {
 
 // Tự động kích hoạt luồng load dữ liệu khi mở dashboard.html
 document.addEventListener('DOMContentLoaded', () => {
-    // Chỉ kích hoạt chạy loadDashboard nếu đang ở trang dashboard chính
     if (document.getElementById("pageContent") || document.getElementById("userName")) {
         loadDashboard();
     }
@@ -141,17 +140,13 @@ function showPage(page) {
                         <h3>👥 Thành viên</h3>
                         <h1>${members.length}</h1>
                     </div>
-                    <div class="card" style="cursor:pointer;" onclick="showPage('admins')">
-                        <h3>🛡️ Admin</h3>
-                        <h1>${admins.length}</h1>
+                    <div class="card" style="cursor:pointer;" onclick="showPage('game')">
+                        <h3>🎁 Mini Game</h3>
+                        <h1>${games.length}</h1>
                     </div>
                     <div class="card" style="cursor:pointer;" onclick="showPage('notice')">
                         <h3>📢 Thông báo</h3>
                         <h1>${notices.length}</h1>
-                    </div>
-                    <div class="card" style="cursor:pointer;" onclick="showPage('game')">
-                        <h3>🎁 Mini Game</h3>
-                        <h1>${games.length}</h1>
                     </div>
                 </div>
 
@@ -193,36 +188,6 @@ function showPage(page) {
                 <table class="table">
                     <tr><th>STT</th><th>Họ tên</th><th>Vai trò</th><th>Hành động</th></tr>
                     ${memberRows ? memberRows : '<tr><td colspan="4" style="text-align:center;">Chưa có thành viên nào</td></tr>'}
-                </table>`;
-            break;
-
-        // --- TRANG QUẢN LÝ ADMIN ---
-        case "admins":
-            let adminRows = "";
-            admins.forEach((a) => {
-                adminRows += `
-                    <tr>
-                        <td>${a.id}</td>
-                        <td>${a.name}</td>
-                        <td>${a.role}</td>
-                        <td><button onclick="deleteAdmin('${a.id}')" style="background:#d32f2f; color:#fff; border:none; padding:5px 10px; border-radius:3px; cursor:pointer;">Xóa</button></td>
-                    </tr>`;
-            });
-            html = `
-                <h2>🛡️ Quản lý Đội ngũ Admin</h2><br>
-                <div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
-                    <h3 style="font-size:16px; color:#0d47a1;">+ Thêm Quản Trị Viên</h3><br>
-                    <input type="text" id="newAdminId" placeholder="Mã TK (VD: ADMIN002)..." style="padding:8px; width:180px; margin-right:10px; border:1px solid #ccc; border-radius:4px;">
-                    <input type="text" id="newAdminName" placeholder="Nhập tên Admin..." style="padding:8px; width:200px; margin-right:10px; border:1px solid #ccc; border-radius:4px;">
-                    <select id="newAdminRole" style="padding:8px; margin-right:10px; border:1px solid #ccc; border-radius:4px;">
-                        <option value="Admin">Admin</option>
-                        <option value="Ban Quản Trị">Ban Quản Trị</option>
-                    </select>
-                    <button onclick="addAdmin()" style="background:#1976d2; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Thêm</button>
-                </div>
-                <table class="table">
-                    <tr><th>Tài khoản</th><th>Tên Quản Trị</th><th>Quyền hạn</th><th>Hành động</th></tr>
-                    ${adminRows ? adminRows : '<tr><td colspan="4" style="text-align:center;">Chưa cấu hình tài khoản admin</td></tr>'}
                 </table>`;
             break;
 
@@ -287,7 +252,6 @@ function showPage(page) {
             break;
     }
 
-    // Đẩy toàn bộ mã HTML đã dựng động vào vùng chứa cốt lõi của Dashboard
     const container = document.getElementById("pageContent");
     if (container) {
         container.innerHTML = html;
@@ -314,27 +278,6 @@ function deleteMember(id) {
         members = members.filter(m => m.id !== id);
         localStorage.setItem("memberList", JSON.stringify(members));
         showPage("members");
-    }
-}
-
-// --- LOGIC ADMIN ---
-function addAdmin() {
-    const id = document.getElementById("newAdminId").value.trim().toUpperCase();
-    const name = document.getElementById("newAdminName").value.trim();
-    const role = document.getElementById("newAdminRole").value;
-    if (!id || !name) { alert("Vui lòng nhập đầy đủ Mã TK và Tên Admin!"); return; }
-    let admins = JSON.parse(localStorage.getItem("adminList")) || [];
-    if (admins.some(a => a.id === id)) { alert("Mã tài khoản này đã tồn tại!"); return; }
-    admins.push({ id: id, name: name, role: role });
-    localStorage.setItem("adminList", JSON.stringify(admins));
-    showPage("admins");
-}
-function deleteAdmin(id) {
-    if (confirm("Bạn có chắc muốn gỡ quyền Admin này không?")) {
-        let admins = JSON.parse(localStorage.getItem("adminList")) || [];
-        admins = admins.filter(a => a.id !== id);
-        localStorage.setItem("adminList", JSON.stringify(admins));
-        showPage("admins");
     }
 }
 
