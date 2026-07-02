@@ -1,321 +1,55 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dora Fanclub Việt Nam - Hệ thống Quản trị</title>
 
-<title>Hệ Thống Quản Lý Nội Bộ - Dora Fanclub Việt Nam</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
-
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(
-135deg,
-#0099ff,
-#0066cc
-);
-}
-
-.login-box{
-  .logo{
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.logo img{
-    width:100px;
-    height:100px;
-    object-fit:contain;
-}
-
-width:420px;
-
-background:#fff;
-
-padding:40px;
-
-border-radius:20px;
-
-box-shadow:
-0 15px 40px rgba(0,0,0,.15);
-
-}
-
-.logo{
-text-align:center;
-margin-bottom:20px;
-}
-
-.logo img{
-width:180px;
-max-width:100%;
-}
-
-.title{
-text-align:center;
-margin-bottom:30px;
-}
-
-.title h1{
-font-size:28px;
-color:#0099ff;
-margin-bottom:8px;
-}
-
-.title p{
-color:#666;
-}
-
-.form-group{
-margin-bottom:18px;
-}
-
-label{
-display:block;
-margin-bottom:8px;
-font-weight:600;
-}
-
-input{
-
-width:100%;
-
-padding:14px;
-
-border:2px solid #ddd;
-
-border-radius:10px;
-
-font-size:15px;
-
-outline:none;
-
-transition:.3s;
-
-}
-
-input:focus{
-border-color:#0099ff;
-}
-
-button{
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:10px;
-
-background:#0099ff;
-
-color:white;
-
-font-size:16px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-button:hover{
-background:#0077dd;
-}
-
-.error{
-
-display:none;
-
-background:#ffe5e5;
-
-color:#c40000;
-
-padding:10px;
-
-border-radius:8px;
-
-margin-bottom:15px;
-
-}
-
-.footer{
-text-align:center;
-margin-top:25px;
-font-size:13px;
-color:#888;
-}
-
-.demo{
-
-margin-top:20px;
-
-background:#f5f7fb;
-
-padding:12px;
-
-border-radius:10px;
-
-font-size:13px;
-
-color:#555;
-
-}
-
-.demo strong{
-color:#0099ff;
-}
-
-</style>
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="login-container">
 
-  <div class="logo">
-</div>
+    <div class="login-card">
 
-<h2>HỆ THỐNG QUẢN LÝ NỘI BỘ</h2>
-<p>Dora Fanclub Việt Nam</p>
-<h1>HỆ THỐNG QUẢN LÝ</h1>
+        <h1>DORA FANCLUB VIỆT NAM</h1>
+        <p>Hệ thống Quản trị Nội bộ</p>
 
-<p>Dora Fanclub Việt Nam</p>
+        <div id="error" class="error">
+            Sai tài khoản hoặc mật khẩu!
+        </div>
 
-</div>
+        <div class="form-group">
+            <label>Tài khoản</label>
+            <input
+                type="text"
+                id="username"
+                placeholder="Nhập tài khoản">
+        </div>
 
-<div id="error" class="error">
+        <div class="form-group">
+            <label>Mật khẩu</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Nhập mật khẩu">
+        </div>
 
-Sai tài khoản hoặc mật khẩu.
+        <button onclick="login()">
+            Đăng nhập
+        </button>
 
-</div>
+        <div class="footer">
+            © 2026 Dora Fanclub Việt Nam
+        </div>
 
-<div class="form-group">
-
-<label>Tài khoản</label>
-
-<input
-type="text"
-id="username"
-placeholder="Nhập tài khoản">
-
-</div>
-
-<div class="form-group">
-
-<label>Mật khẩu</label>
-
-<input
-type="password"
-id="password"
-placeholder="Nhập mật khẩu">
+    </div>
 
 </div>
 
-<button onclick="login()">
-
-Đăng nhập
-
-</button>
-
-<div class="demo">
-
-<strong>Tài khoản mẫu:</strong><br>
-
-BQT001 / admin123<br>
-
-ADMIN001 / admin123
-
-</div>
-
-<div class="footer">
-
-© Dora Fanclub Việt Nam 2026
-
-</div>
-
-</div>
-
-<script>
-
-const accounts = [
-
-{
-username:"BQT001",
-password:"admin123",
-name:"Nguyễn Thị Thảo Nhi",
-role:"BQT"
-},
-
-{
-username:"ADMIN001",
-password:"admin123",
-name:"Khánh Duy",
-role:"ADMIN"
-}
-
-];
-
-function login(){
-
-const username =
-document.getElementById("username").value;
-
-const password =
-document.getElementById("password").value;
-
-const user =
-accounts.find(
-
-u =>
-u.username === username &&
-u.password === password
-
-);
-
-if(user){
-
-localStorage.setItem(
-"currentUser",
-JSON.stringify(user)
-);
-
-window.location.href =
-"dashboard.html";
-
-}else{
-
-document.getElementById(
-"error"
-).style.display = "block";
-
-}
-
-}
-
-if(localStorage.getItem("currentUser")){
-
-window.location.href =
-"dashboard.html";
-
-}
-
-</script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
