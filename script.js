@@ -13,9 +13,15 @@ const accounts = [
         password: "admin123",
         name: "Nguyễn Thị Thảo Nhi",
         role: "Admin"
+    },
+    // 👇 BẠN THÊM TÀI KHOẢN MỚI VÀO ĐÂY NHÉ 👇
+    {
+        username: "ADMIN002",         // Tài khoản dùng để đăng nhập
+        password: "matkhaumoi123",    // Mật khẩu đăng nhập
+        name: "Thành Viên Mới",        // Tên sẽ hiển thị ở góc phải màn hình
+        role: "Admin"                 // Chức danh
     }
 ];
-
 // ====================================================
 // KHỞI TẠO DỮ LIỆU MẶC ĐỊNH TRÊN LOCALSTORAGE (NẾU CHƯA CÓ)
 // ====================================================
