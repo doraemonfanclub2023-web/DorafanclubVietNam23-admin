@@ -1,62 +1,182 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Dora Fanclub Việt Nam</title>
+/* ==================== CÀI ĐẶT CHUNG ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    <link rel="stylesheet" href="style.css">
-</head>
+body {
+    background-color: #f4f6f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-<body onload="loadDashboard()">
+/* ==================== HEADER ==================== */
+.header {
+    background-color: #1e88e5; /* Màu xanh Doraemon cực chuẩn */
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-<header class="header">
+.header h2 {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
 
-    <h2>DORA FANCLUB VIỆT NAM</h2>
+.user-box {
+    font-size: 14px;
+}
 
-    <div class="user-box">
-        Xin chào,
-        <span id="userName"></span>
-    </div>
+#userName {
+    font-weight: bold;
+    text-decoration: underline;
+}
 
-</header>
+/* ==================== THÂN TRANG (LAYOUT CHI CHÚNG) ==================== */
+.container {
+    display: flex;
+    flex: 1;
+}
 
-<div class="container">
+/* SIDEBAR (MENU TRÁI) */
+.sidebar {
+    width: 240px;
+    background-color: #0d47a1;
+    padding-top: 20px;
+}
 
-    <!-- MENU -->
+.sidebar ul {
+    list-style: none;
+}
 
-    <aside class="sidebar">
+.sidebar ul li a {
+    display: block;
+    color: #e3f2fd;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s;
+}
 
-<ul>
+.sidebar ul li a:hover {
+    background-color: #1565c0;
+    color: #fff;
+    padding-left: 25px;
+}
 
-<li><a href="#" onclick="showPage('home')">🏠 Trang chủ</a></li>
+.sidebar ul li a.logout {
+    margin-top: 30px;
+    border-top: 1px solid #1565c0;
+    color: #ff8a80;
+}
 
-<li><a href="#" onclick="showPage('members')">👥 Thành viên</a></li>
+.sidebar ul li a.logout:hover {
+    background-color: #d32f2f;
+    color: #fff;
+}
 
-<li><a href="#" onclick="showPage('admins')">🛡️ Quản lý Admin</a></li>
+/* CONTENT (NỘI DUNG PHẢI) */
+.content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
 
-<li><a href="#" onclick="showPage('notice')">📢 Thông báo</a></li>
+/* ==================== THÀNH PHẦN DASHBOARD (HOME) ==================== */
+/* CÁC THẺ THỐNG KÊ (CARDS) */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
 
-<li><a href="#" onclick="showPage('game')">🎁 Mini Game</a></li>
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-left: 5px solid #1e88e5;
+    transition: transform 0.2s;
+}
 
-<li><a href="#" onclick="showPage('setting')">⚙️ Cài đặt</a></li>
+.card:hover {
+    transform: translateY(-3px);
+}
 
-<li><a href="#" class="logout" onclick="logout()">🚪 Đăng xuất</a></li>
+.card h3 {
+    font-size: 14px;
+    color: #777;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
 
-</ul>
+.card h1 {
+    font-size: 28px;
+    color: #111;
+}
 
-</aside>
+/* HOẠT ĐỘNG GẦN ĐÂY */
+.activity {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
 
-    <!-- NỘI DUNG -->
+.activity h3 {
+    margin-bottom: 15px;
+    color: #0d47a1;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 8px;
+}
 
-   <main class="content">
+.activity ul {
+    list-style: none;
+}
 
-<div id="pageContent"></div>
+.activity ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
 
-</main>
-</div>
+.activity ul li:last-child {
+    border-bottom: none;
+}
 
-<script src="script.js"></script>
+/* ==================== BẢNG DỮ LIỆU (TABLES) ==================== */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-top: 15px;
+}
 
-</body>
-</html>
+.table th {
+    background-color: #1976d2;
+    color: #fff;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 15px;
+}
+
+.table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.table tr:hover {
+    background-color: #f8f9fa;
+}
