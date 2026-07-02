@@ -3,348 +3,360 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dora Fanclub Việt Nam - Dashboard</title>
+<title>Dora Fanclub Việt Nam - Quản trị</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
-display:flex;
-height:100vh;
-background:#f4f8fb;
+background:#f5f7fb;
 }
 
-/* Sidebar */
-
-.sidebar{
-width:260px;
+header{
 background:#0099ff;
 color:white;
 padding:20px;
-display:flex;
-flex-direction:column;
 }
 
-.logo{
-text-align:center;
-margin-bottom:30px;
+header h1{
+font-size:28px;
 }
 
-.logo img{
-width:180px;
-max-width:100%;
-}
-
-.menu{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.menu button{
-padding:12px;
-border:none;
-border-radius:10px;
-background:rgba(255,255,255,.15);
-color:white;
-font-size:15px;
-cursor:pointer;
-text-align:left;
-}
-
-.menu button:hover{
-background:rgba(255,255,255,.25);
-}
-
-/* Main */
-
-.main{
-flex:1;
-padding:30px;
-overflow:auto;
-}
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
-}
-
-.userbox{
+nav{
 background:white;
-padding:10px 15px;
-border-radius:12px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
+padding:15px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-bottom:30px;
+nav button{
+padding:10px 15px;
+margin-right:10px;
+border:none;
+background:#0099ff;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+nav button:hover{
+background:#0077cc;
+}
+
+.container{
+padding:20px;
 }
 
 .card{
 background:white;
 padding:20px;
-border-radius:15px;
-box-shadow:0 3px 15px rgba(0,0,0,.08);
+border-radius:10px;
+margin-bottom:20px;
+box-shadow:0 2px 6px rgba(0,0,0,.08);
 }
 
-.card h3{
-font-size:15px;
-color:#666;
-margin-bottom:10px;
+table{
+width:100%;
+border-collapse:collapse;
 }
 
-.card p{
-font-size:28px;
-font-weight:bold;
-color:#0099ff;
+table th,
+table td{
+border:1px solid #ddd;
+padding:10px;
+text-align:left;
 }
 
-.content{
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 3px 15px rgba(0,0,0,.08);
+table th{
+background:#0099ff;
+color:white;
 }
 
-.content h2{
-margin-bottom:15px;
+input{
+padding:10px;
+width:300px;
+margin-right:10px;
+}
+
+.action-btn{
+padding:8px 12px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.delete-btn{
+background:red;
+color:white;
 }
 
 .logout{
-margin-top:auto;
-background:#ff4444!important;
+background:#e60000;
+color:white;
+margin-top:20px;
 }
-
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="sidebar">
+<header>
+<h1>Dora Fanclub Việt Nam</h1>
+</header>
 
-<div class="logo">
-<img src="assets/logo.png">
-</div>
+<nav>
+<button onclick="showHome()">🏠 Trang chủ</button>
+<button onclick="showMembers()">👥 Thành viên</button>
+<button onclick="showPosts()">📢 Bài đăng</button>
+<button onclick="showMiniGame()">🎁 Mini Game</button>
+</nav>
 
-<div class="menu">
+<div class="container">
 
-<button onclick="showPage('home')">
-🏠 Trang chủ
+<div id="content"></div>
+
+<button class="action-btn logout" onclick="logout()">
+Đăng xuất
 </button>
-
-<button onclick="showPage('members')">
-👥 Thành viên
-</button>
-
-<button id="bqtMenu" onclick="showPage('admins')">
-🛡️ Ban quản trị
-</button>
-
-<button onclick="showPage('notice')">
-📢 Thông báo
-</button>
-
-<button onclick="showPage('game')">
-🎁 Mini Game
-</button>
-
-<button onclick="showPage('violation')">
-⚠️ Vi phạm
-</button>
-
-<button id="logMenu" onclick="showPage('log')">
-📋 Nhật ký hoạt động
-</button>
-
-<button class="logout" onclick="logout()">
-🚪 Đăng xuất
-</button>
-
-</div>
-
-</div>
-
-<div class="main">
-
-<div class="header">
-
-<h1>DORA FANCLUB VIỆT NAM</h1>
-
-<div class="userbox">
-<span id="welcome"></span>
-</div>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
-<h3>Tổng thành viên</h3>
-<p>152</p>
-</div>
-
-<div class="card">
-<h3>BQT</h3>
-<p>2</p>
-</div>
-
-<div class="card">
-<h3>Admin</h3>
-<p>5</p>
-</div>
-
-<div class="card">
-<h3>Mini Game</h3>
-<p>1</p>
-</div>
-
-</div>
-
-<div class="content" id="content">
-
-<h2>🏠 Trang chủ</h2>
-
-<p>
-Chào mừng đến với Hệ thống quản lý nội bộ Dora Fanclub Việt Nam.
-</p>
-
-</div>
 
 </div>
 
 <script>
 
-const user =
-JSON.parse(
-localStorage.getItem("currentUser")
+if(!localStorage.getItem("members")){
+
+localStorage.setItem(
+"members",
+JSON.stringify([
+{
+id:"TV001",
+name:"Nguyễn Thị Thảo Nhi",
+role:"BQT"
+},
+{
+id:"TV002",
+name:"Khánh Duy",
+role:"ADMIN"
+}
+])
 );
 
-if(!user){
-window.location.href="index.html";
 }
 
-document.getElementById("welcome").innerHTML=
-user.name + " (" + user.role + ")";
+showHome();
 
-if(user.role !== "BQT"){
-document.getElementById("bqtMenu").style.display="none";
-document.getElementById("logMenu").style.display="none";
-}
+function showHome(){
 
-function showPage(page){
+document.getElementById("content").innerHTML=`
 
-let content=
-document.getElementById("content");
+<div class="card">
+<h2>👋 Xin chào Admin</h2>
+<br>
+<p>Chào mừng đến hệ thống quản lý Dora Fanclub Việt Nam.</p>
+</div>
 
-switch(page){
+<div class="card">
+<h2>📊 Thống kê</h2>
+<br>
+<p>Số thành viên quản trị:
+${getMembers().length}</p>
+</div>
 
-case "home":
-
-content.innerHTML=`
-<h2>🏠 Trang chủ</h2>
-<p>Chào mừng đến với hệ thống quản lý nội bộ Dora Fanclub Việt Nam.</p>
 `;
 
-break;
+}
 
-case "members":
+function getMembers(){
+return JSON.parse(
+localStorage.getItem("members")
+);
+}
 
-content.innerHTML=`
-<h2>👥 Thành viên</h2>
+function saveMembers(data){
+localStorage.setItem(
+"members",
+JSON.stringify(data)
+);
+}
 
-<table border="1" width="100%" cellpadding="10">
+function showMembers(){
+
+let html=`
+
+<div class="card">
+
+<h2>👥 Quản lý thành viên</h2>
+
+<br>
+
+<input
+id="searchBox"
+placeholder="Tìm thành viên..."
+onkeyup="searchMembers()">
+
+<button onclick="addMember()">
+➕ Thêm thành viên
+</button>
+
+<br><br>
+
+<div id="memberTable"></div>
+
+</div>
+
+`;
+
+document.getElementById("content").innerHTML=html;
+
+renderTable(getMembers());
+
+}
+
+function renderTable(data){
+
+let html=`
+
+<table>
 
 <tr>
 <th>Mã</th>
 <th>Họ tên</th>
-<th>Chức vụ</th>
+<th>Vai trò</th>
+<th>Thao tác</th>
 </tr>
+
+`;
+
+data.forEach((m,index)=>{
+
+html+=`
 
 <tr>
-<td>TV001</td>
-<td>Cao Ngọc Duyên</td>
-<td>Thành viên</td>
+
+<td>${m.id}</td>
+<td>${m.name}</td>
+<td>${m.role}</td>
+
+<td>
+<button
+class="action-btn delete-btn"
+onclick="deleteMember(${index})">
+Xóa
+</button>
+</td>
+
 </tr>
 
-<tr>
-<td>TV002</td>
-<td>Nguyễn Thị Thảo Nhi</td>
-<td>BQT</td>
-</tr>
-
-</table>
 `;
 
-break;
+});
 
-case "admins":
+html+=`</table>`;
 
-content.innerHTML=`
-<h2>🛡️ Ban quản trị</h2>
-
-<ul>
-<li>Nguyễn Thị Thảo Nhi - BQT</li>
-<li>Khánh Duy - Admin</li>
-</ul>
-`;
-
-break;
-
-case "notice":
-
-content.innerHTML=`
-<h2>📢 Thông báo</h2>
-
-<p>Chưa có thông báo mới.</p>
-`;
-
-break;
-
-case "game":
-
-content.innerHTML=`
-<h2>🎁 Mini Game</h2>
-
-<p>Hè rực rỡ - Săn bảo bối khủng.</p>
-`;
-
-break;
-
-case "violation":
-
-content.innerHTML=`
-<h2>⚠️ Vi phạm</h2>
-
-<p>Chưa có biên bản vi phạm.</p>
-`;
-
-break;
-
-case "log":
-
-content.innerHTML=`
-<h2>📋 Nhật ký hoạt động</h2>
-
-<ul>
-<li>02/07/2026 - Đăng nhập hệ thống</li>
-<li>01/07/2026 - Cập nhật thành viên</li>
-</ul>
-`;
-
-break;
+document.getElementById(
+"memberTable"
+).innerHTML=html;
 
 }
+
+function searchMembers(){
+
+const keyword=
+document.getElementById("searchBox")
+.value
+.toLowerCase();
+
+const result=
+getMembers().filter(
+
+m =>
+m.name.toLowerCase()
+.includes(keyword)
+
+);
+
+renderTable(result);
+
+}
+
+function addMember(){
+
+const name=
+prompt("Nhập họ tên:");
+
+if(!name) return;
+
+const role=
+prompt("Nhập vai trò (BQT hoặc ADMIN):");
+
+const members=
+getMembers();
+
+members.push({
+
+id:
+"TV"+
+String(
+members.length+1
+).padStart(3,"0"),
+
+name:name,
+
+role:role || "ADMIN"
+
+});
+
+saveMembers(members);
+
+showMembers();
+
+}
+
+function deleteMember(index){
+
+if(!confirm("Xóa thành viên này?"))
+return;
+
+const members=
+getMembers();
+
+members.splice(index,1);
+
+saveMembers(members);
+
+showMembers();
+
+}
+
+function showPosts(){
+
+document.getElementById("content").innerHTML=`
+
+<div class="card">
+<h2>📢 Quản lý bài đăng</h2>
+<br>
+<p>Tính năng đang phát triển.</p>
+</div>
+
+`;
+
+}
+
+function showMiniGame(){
+
+document.getElementById("content").innerHTML=`
+
+<div class="card">
+<h2>🎁 Mini Game</h2>
+<br>
+<p>Tính năng đang phát triển.</p>
+</div>
+
+`;
 
 }
 
@@ -360,6 +372,6 @@ window.location.href=
 }
 
 </script>
-<script src="js/members.js"></script>
+
 </body>
 </html>
