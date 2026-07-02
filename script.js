@@ -1,27 +1,15 @@
-// =========================
-// DANH SÁCH TÀI KHOẢN GỐC
-// =========================
-const accounts = [
-    {
-        username: "BQT001",
-        password: "admin123",
-        name: "Nguyễn Tuấn Khải",
-        role: "Ban Quản Trị"
-    },
-    {
-        username: "ADMIN001",
-        password: "admin123",
-        name: "Nguyễn Thị Thảo Nhi",
-        role: "Admin"
-    },
-    // 👇 BẠN THÊM TÀI KHOẢN MỚI VÀO ĐÂY NHÉ 👇
-    {
-        username: "ADMIN002",         // Tài khoản dùng để đăng nhập
-        password: "matkhaumoi123",    // Mật khẩu đăng nhập
-        name: "Thành Viên Mới",        // Tên sẽ hiển thị ở góc phải màn hình
-        role: "Admin"                 // Chức danh
-    }
-];
+// ====================================================
+// KHỞI TẠO TÀI KHOẢN TRÊN LOCALSTORAGE (NẾU CHƯA CÓ)
+// ====================================================
+if (!localStorage.getItem("accountList")) {
+    const defaultAccounts = [
+        { username: "BQT001", password: "admin123", name: "Nguyễn Tuấn Khải", role: "Ban Quản Trị" },
+        { username: "ADMIN001", password: "admin123", name: "Nguyễn Thị Thảo Nhi", role: "Admin" },
+        { username: "ADMIN002", password: "matkhaumoi123", name: "Thành Viên Mới", role: "Admin" }
+    ];
+    localStorage.setItem("accountList", JSON.stringify(defaultAccounts));
+}
+
 // ====================================================
 // KHỞI TẠO DỮ LIỆU MẶC ĐỊNH TRÊN LOCALSTORAGE (NẾU CHƯA CÓ)
 // ====================================================
@@ -66,6 +54,9 @@ if (!localStorage.getItem("gameList")) {
 function login() {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+
+    // Lấy danh sách tài khoản cập nhật liên tục từ LocalStorage
+    const accounts = JSON.parse(localStorage.getItem("accountList")) || [];
 
     const user = accounts.find(account =>
         account.username === username &&
@@ -131,9 +122,9 @@ function showPage(page) {
 
     // Đọc dữ liệu cập nhật mới nhất từ LocalStorage mỗi lần chuyển tab
     const members = JSON.parse(localStorage.getItem("memberList")) || [];
-    const admins = JSON.parse(localStorage.getItem("adminList")) || [];
     const notices = JSON.parse(localStorage.getItem("noticeList")) || [];
     const games = JSON.parse(localStorage.getItem("gameList")) || [];
+    const accounts = JSON.parse(localStorage.getItem("accountList")) || [];
 
     switch(page) {
         // --- TRANG CHỦ ---
@@ -247,12 +238,46 @@ function showPage(page) {
                 </table>`;
             break;
 
-        // --- TRANG CÀI ĐẶT ---
+        // --- TRANG CÀI ĐẶT (NƠI QUẢN LÝ TÀI KHOẢN TRỰC QUAN) ---
         case "setting":
+            let accountRows = "";
+            accounts.forEach((acc, index) => {
+                accountRows += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><mark style="background:#e3f2fd; padding:2px 5px; border-radius:3px;">${acc.username}</mark></td>
+                        <td>••••••••</td>
+                        <td>${acc.name}</td>
+                        <td>${acc.role}</td>
+                        <td>
+                            ${acc.username === 'BQT001' ? '<i>Mặc định</i>' : `<button onclick="deleteAccount('${acc.username}')" style="background:#d32f2f; color:#fff; border:none; padding:5px 10px; border-radius:3px; cursor:pointer;">Xóa</button>`}
+                        </td>
+                    </tr>`;
+            });
+
             html = `
-                <h2>⚙️ Cài đặt hệ thống</h2>
+                <h2>⚙️ Cài đặt hệ thống & Quản lý Tài khoản Đăng nhập</h2>
                 <br>
-                <p>Phiên bản Dashboard: <b>1.5 (Local Dynamic SPA)</b></p>
+                <div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+                    <h3 style="font-size:16px; color:#0d47a1;">+ Cấp tài khoản đăng nhập mới</h3><br>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" id="accUser" placeholder="Tên đăng nhập (ví dụ: ADMIN003)..." style="padding:8px; width:200px; border:1px solid #ccc; border-radius:4px;">
+                        <input type="password" id="accPass" placeholder="Mật khẩu..." style="padding:8px; width:150px; border:1px solid #ccc; border-radius:4px;">
+                        <input type="text" id="accName" placeholder="Họ tên hiển thị..." style="padding:8px; width:200px; border:1px solid #ccc; border-radius:4px;">
+                        <select id="accRole" style="padding:8px; border:1px solid #ccc; border-radius:4px;">
+                            <option value="Admin">Admin</option>
+                            <option value="Ban Quản Trị">Ban Quản Trị</option>
+                        </select>
+                        <button onclick="addAccount()" style="background:#2e7d32; color:#fff; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Tạo Tài Khoản</button>
+                    </div>
+                </div>
+
+                <table class="table">
+                    <tr><th>STT</th><th>Tài khoản</th><th>Mật khẩu</th><th>Họ tên</th><th>Quyền hạn</th><th>Hành động</th></tr>
+                    ${accountRows}
+                </table>
+                <br><br>
+                <p>Phiên bản Dashboard: <b>2.0 (Hỗ trợ Quản lý Account động)</b></p>
                 <p>Bản quyền thuộc về: <b>Dora Fanclub Việt Nam</b></p>
             `;
             break;
@@ -267,6 +292,40 @@ function showPage(page) {
 // ====================================================
 // XỬ LÝ LOGIC CRUD (THÊM / XÓA) CHO TỪNG DANH MỤC
 // ====================================================
+
+// --- LOGIC TÀI KHOẢN ĐĂNG NHẬP (MỚI) ---
+function addAccount() {
+    const user = document.getElementById("accUser").value.trim();
+    const pass = document.getElementById("accPass").value.trim();
+    const name = document.getElementById("accName").value.trim();
+    const role = document.getElementById("accRole").value;
+
+    if (!user || !pass || !name) { 
+        alert("Vui lòng nhập đầy đủ thông tin tài khoản, mật khẩu và họ tên!"); 
+        return; 
+    }
+
+    let accounts = JSON.parse(localStorage.getItem("accountList")) || [];
+    
+    // Kiểm tra trùng tài khoản
+    if (accounts.some(acc => acc.username.toLowerCase() === user.toLowerCase())) {
+        alert("Tên tài khoản này đã tồn tại! Vui lòng chọn tên khác.");
+        return;
+    }
+
+    accounts.push({ username: user, password: pass, name: name, role: role });
+    localStorage.setItem("accountList", JSON.stringify(accounts));
+    showPage("setting");
+}
+
+function deleteAccount(username) {
+    if (confirm(`Bạn có chắc muốn xóa tài khoản [${username}] không?`)) {
+        let accounts = JSON.parse(localStorage.getItem("accountList")) || [];
+        accounts = accounts.filter(acc => acc.username !== username);
+        localStorage.setItem("accountList", JSON.stringify(accounts));
+        showPage("setting");
+    }
+}
 
 // --- LOGIC THÀNH VIÊN ---
 function addMember() {
