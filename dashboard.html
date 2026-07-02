@@ -1,117 +1,225 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Dora Fanclub Việt Nam</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dora Fanclub Việt Nam</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body onload="loadDashboard()">
 
-<header class="header">
+<header>
 
-    <h2>DORA FANCLUB VIỆT NAM</h2>
+<h2>DORA FANCLUB VIỆT NAM</h2>
 
-    <div class="user-box">
-        Xin chào,
-        <span id="userName"></span>
-    </div>
+<div class="user">
+Xin chào,
+<b id="userName"></b>
+</div>
 
 </header>
 
-<div class="container">
+<div class="wrapper">
 
-    <!-- MENU -->
+<nav>
 
-    <aside class="sidebar">
+<button onclick="showPage('home')">🏠 Trang chủ</button>
 
-        <ul>
+<button onclick="showPage('members')">👥 Thành viên</button>
 
-<li><a href="dashboard.html">🏠 Trang chủ</a></li>
+<button onclick="showPage('admins')">🛡️ Quản lý Admin</button>
 
-<li><a href="members.html">👥 Thành viên</a></li>
+<button onclick="showPage('notice')">📢 Thông báo</button>
 
-<li><a href="admins.html">🛡️ Quản lý Admin</a></li>
+<button onclick="showPage('game')">🎁 Mini Game</button>
 
-<li><a href="notice.html">📢 Thông báo</a></li>
+<button onclick="showPage('setting')">⚙️ Cài đặt</button>
 
-<li><a href="game.html">🎁 Mini Game</a></li>
+<button onclick="logout()" class="logout">
 
-<li><a href="settings.html">⚙️ Cài đặt</a></li>
+🚪 Đăng xuất
 
-<li><a href="#" class="logout" onclick="logout()">🚪 Đăng xuất</a></li>
+</button>
 
-        </ul>
+</nav>
 
-    </aside>
+<main>
 
-    <!-- NỘI DUNG -->
+<!-- HOME -->
 
-    <main class="content">
+<div id="home" class="page">
 
-        <h2>Trang chủ</h2>
+<h2>Tổng quan</h2>
 
-        <br>
+<div class="cards">
 
-        <div class="cards">
+<div class="card">
 
-            <div class="card">
-                <h3>👥 Thành viên</h3>
-                <h1>125</h1>
-            </div>
+<h3>👥 Thành viên</h3>
 
-            <div class="card">
-                <h3>🛡️ Admin</h3>
-                <h1>5</h1>
-            </div>
+<h1>125</h1>
 
-            <div class="card">
-                <h3>📢 Thông báo</h3>
-                <h1>12</h1>
-            </div>
+</div>
 
-            <div class="card">
-                <h3>🎁 Mini Game</h3>
-                <h1>3</h1>
-            </div>
+<div class="card">
 
-        </div>
+<h3>🛡️ Admin</h3>
 
-        <div class="activity">
+<h1>5</h1>
 
-            <h3>📋 Hoạt động gần đây</h3>
+</div>
 
-            <ul>
+<div class="card">
 
-                <li>BQT001 đăng nhập hệ thống.</li>
+<h3>📢 Thông báo</h3>
 
-                <li>Nguyễn Thị Thảo Nhi thêm thành viên mới.</li>
+<h1>12</h1>
 
-                <li>Đăng thông báo Mini Game tháng 8.</li>
+</div>
 
-                <li>Cập nhật danh sách Admin.</li>
+<div class="card">
 
-            </ul>
+<h3>🎁 Mini Game</h3>
 
-        </div>
+<h1>3</h1>
 
-    </main>
+</div>
+
+</div>
+
+</div>
+
+<!-- MEMBERS -->
+
+<div id="members" class="page" style="display:none;">
+
+<h2>Danh sách thành viên</h2>
+
+<br>
+
+<input
+type="text"
+placeholder="Tìm kiếm thành viên">
+
+<br><br>
+
+<table>
+
+<tr>
+
+<th>STT</th>
+
+<th>Họ tên</th>
+
+<th>Vai trò</th>
+
+</tr>
+
+<tr>
+
+<td>1</td>
+
+<td>Nguyễn Tuấn Khải</td>
+
+<td>BQT</td>
+
+</tr>
+
+<tr>
+
+<td>2</td>
+
+<td>Nguyễn Thị Thảo Nhi</td>
+
+<td>Admin</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<!-- ADMINS -->
+
+<div id="admins" class="page" style="display:none;">
+
+<h2>Quản lý Admin</h2>
+
+<ul>
+
+<li>Nguyễn Tuấn Khải - BQT</li>
+
+<li>Nguyễn Thị Thảo Nhi - Admin</li>
+
+</ul>
+
+</div>
+
+<!-- NOTICE -->
+
+<div id="notice" class="page" style="display:none;">
+
+<h2>Thông báo</h2>
+
+<ul>
+
+<li>Tuyển CTV tháng 8</li>
+
+<li>Mini Game mùa hè</li>
+
+<li>Thông báo họp BQT</li>
+
+</ul>
+
+</div>
+
+<!-- GAME -->
+
+<div id="game" class="page" style="display:none;">
+
+<h2>Mini Game</h2>
+
+<table>
+
+<tr>
+
+<th>Tên</th>
+
+<th>Trạng thái</th>
+
+</tr>
+
+<tr>
+
+<td>Đố vui Doraemon</td>
+
+<td>Đang mở</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div id="setting" class="page" style="display:none;">
+
+<h2>Cài đặt</h2>
+
+<p>Thông tin tài khoản</p>
+
+<p>Đổi mật khẩu (sẽ phát triển sau)</p>
+
+</div>
+
+</main>
 
 </div>
 
 <script src="script.js"></script>
-<div class="sidebar">
-    <ul>
-        <li><a href="dashboard.html">🏠 Trang chủ</a></li>
-        <li><a href="members.html">👥 Thành viên</a></li>
-        <li><a href="admins.html">🛡️ Quản lý Admin</a></li>
-        <li><a href="notice.html">📢 Thông báo</a></li>
-        <li><a href="game.html">🎁 Mini Game</a></li>
-        <li><a href="settings.html">⚙️ Cài đặt</a></li>
-        <li><a href="index.html" class="logout">🚪 Đăng xuất</a></li>
-    </ul>
-</div>
+
 </body>
 </html>
