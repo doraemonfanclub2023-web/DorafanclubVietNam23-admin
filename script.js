@@ -15,7 +15,24 @@ const accounts = [
         role: "Admin"
     }
 ];
+function showPage(pageId) {
+    // 1. Ẩn tất cả các trang phụ (sub-page)
+    const pages = document.querySelectorAll('.sub-page');
+    pages.forEach(page => {
+        page.style.display = 'none';
+    });
 
+    // 2. Hiển thị trang được chọn bằng ID
+    const activePage = document.getElementById('page-' + pageId);
+    if (activePage) {
+        activePage.style.display = 'block';
+    }
+}
+
+// Mặc định khi vừa tải xong trang, đảm bảo trang chủ hiển thị
+document.addEventListener('DOMContentLoaded', () => {
+    showPage('home');
+});
 // ====================================================
 // KHỞI TẠO DỮ LIỆU MẶC ĐỊNH TRÊN LOCALSTORAGE (NẾU CHƯA CÓ)
 // ====================================================
