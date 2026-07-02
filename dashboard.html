@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Dora Fanclub Việt Nam</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="loadDashboard()">
+
+<header class="header">
+
+    <h2>DORA FANCLUB VIỆT NAM</h2>
+
+    <div class="user-box">
+        Xin chào,
+        <span id="userName"></span>
+    </div>
+
+</header>
+
+<div class="container">
+
+    <!-- MENU -->
+
+    <aside class="sidebar">
+
+        <ul>
+
+            <li><a href="#">🏠 Trang chủ</a></li>
+
+            <li><a href="#">👥 Thành viên</a></li>
+
+            <li><a href="#">🛡️ Quản lý Admin</a></li>
+
+            <li><a href="#">📢 Thông báo</a></li>
+
+            <li><a href="#">🎁 Mini Game</a></li>
+
+            <li><a href="#">⚙️ Cài đặt</a></li>
+
+            <li><a href="#" class="logout" onclick="logout()">🚪 Đăng xuất</a></li>
+
+        </ul>
+
+    </aside>
+
+    <!-- NỘI DUNG -->
+
+    <main class="content">
+
+        <h2>Trang chủ</h2>
+
+        <br>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>👥 Thành viên</h3>
+                <h1>125</h1>
+            </div>
+
+            <div class="card">
+                <h3>🛡️ Admin</h3>
+                <h1>5</h1>
+            </div>
+
+            <div class="card">
+                <h3>📢 Thông báo</h3>
+                <h1>12</h1>
+            </div>
+
+            <div class="card">
+                <h3>🎁 Mini Game</h3>
+                <h1>3</h1>
+            </div>
+
+        </div>
+
+        <div class="activity">
+
+            <h3>📋 Hoạt động gần đây</h3>
+
+            <ul>
+
+                <li>BQT001 đăng nhập hệ thống.</li>
+
+                <li>Nguyễn Thị Thảo Nhi thêm thành viên mới.</li>
+
+                <li>Đăng thông báo Mini Game tháng 8.</li>
+
+                <li>Cập nhật danh sách Admin.</li>
+
+            </ul>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
