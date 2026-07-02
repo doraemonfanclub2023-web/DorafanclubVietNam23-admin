@@ -15,24 +15,7 @@ const accounts = [
         role: "Admin"
     }
 ];
-function showPage(pageId) {
-    // 1. Ẩn tất cả các trang phụ (sub-page)
-    const pages = document.querySelectorAll('.sub-page');
-    pages.forEach(page => {
-        page.style.display = 'none';
-    });
 
-    // 2. Hiển thị trang được chọn bằng ID
-    const activePage = document.getElementById('page-' + pageId);
-    if (activePage) {
-        activePage.style.display = 'block';
-    }
-}
-
-// Mặc định khi vừa tải xong trang, đảm bảo trang chủ hiển thị
-document.addEventListener('DOMContentLoaded', () => {
-    showPage('home');
-});
 // ====================================================
 // KHỞI TẠO DỮ LIỆU MẶC ĐỊNH TRÊN LOCALSTORAGE (NẾU CHƯA CÓ)
 // ====================================================
@@ -72,7 +55,7 @@ if (!localStorage.getItem("gameList")) {
 }
 
 // =========================
-// ĐĂNG NHẬP
+// ĐĂNG NHẬP LOGIC
 // =========================
 function login() {
     const username = document.getElementById("username").value.trim();
@@ -107,15 +90,23 @@ function checkLogin() {
 // ==========================================
 function loadDashboard() {
     const user = checkLogin();
-    const name = document.getElementById("userName");
+    const nameStr = document.getElementById("userName");
 
-    if (name) {
-        name.innerHTML = user.name + " (" + user.role + ")";
+    if (nameStr) {
+        nameStr.innerHTML = user.name + " (" + user.role + ")";
     }
 
-    // Tự động hiển thị Trang Chủ ngay khi load xong Dashboard
+    // Khởi chạy hiển thị Trang Chủ động ngay khi load xong dữ liệu
     showPage('home');
 }
+
+// Tự động kích hoạt luồng load dữ liệu khi mở dashboard.html
+document.addEventListener('DOMContentLoaded', () => {
+    // Chỉ kích hoạt chạy loadDashboard nếu đang ở trang dashboard chính
+    if (document.getElementById("pageContent") || document.getElementById("userName")) {
+        loadDashboard();
+    }
+});
 
 // =========================
 // ĐĂNG XUẤT
@@ -128,12 +119,12 @@ function logout() {
 }
 
 // ====================================================
-// CHỨC NĂNG CHUYỂN ĐỔI NỘI DUNG SPA (SHOW PAGE ĐỘNG)
+// CHỨC NĂNG CHUYỂN ĐỔI NỘI DUNG SPA ĐỘNG (DUY NHẤT)
 // ====================================================
 function showPage(page) {
     let html = "";
 
-    // Đọc dữ liệu cập nhật mới nhất từ LocalStorage
+    // Đọc dữ liệu cập nhật mới nhất từ LocalStorage mỗi lần chuyển tab
     const members = JSON.parse(localStorage.getItem("memberList")) || [];
     const admins = JSON.parse(localStorage.getItem("adminList")) || [];
     const notices = JSON.parse(localStorage.getItem("noticeList")) || [];
@@ -143,7 +134,7 @@ function showPage(page) {
         // --- TRANG CHỦ ---
         case "home":
             html = `
-                <h2>Tổng quan</h2>
+                <h2>Tổng quan hệ thống</h2>
                 <br>
                 <div class="cards">
                     <div class="card" style="cursor:pointer;" onclick="showPage('members')">
@@ -165,11 +156,11 @@ function showPage(page) {
                 </div>
 
                 <div class="activity">
-                    <h3>📋 Hoạt động hệ thống</h3>
+                    <h3>📋 Hoạt động hệ thống gần đây</h3>
                     <ul>
-                        <li>Hệ thống vận hành ổn định trên nền tảng LocalStorage.</li>
-                        <li>Cập nhật số liệu thời gian thực (Real-time).</li>
-                        <li>Đã đồng bộ hóa dữ liệu nội bộ Dora Fanclub Việt Nam.</li>
+                        <li>Hệ thống vận hành ổn định trên nền tảng LocalStorage thời gian thực.</li>
+                        <li>Cập nhật và đồng bộ hóa tự động dữ liệu nội bộ Dora Fanclub Việt Nam.</li>
+                        <li>Thiết lập sẵn cấu trúc sự kiện quảng bá và tương tác thành viên.</li>
                     </ul>
                 </div>
             `;
@@ -218,7 +209,7 @@ function showPage(page) {
                     </tr>`;
             });
             html = `
-                <h2>🛡️ Quản lý Admin</h2><br>
+                <h2>🛡️ Quản lý Đội ngũ Admin</h2><br>
                 <div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
                     <h3 style="font-size:16px; color:#0d47a1;">+ Thêm Quản Trị Viên</h3><br>
                     <input type="text" id="newAdminId" placeholder="Mã TK (VD: ADMIN002)..." style="padding:8px; width:180px; margin-right:10px; border:1px solid #ccc; border-radius:4px;">
@@ -231,7 +222,7 @@ function showPage(page) {
                 </div>
                 <table class="table">
                     <tr><th>Tài khoản</th><th>Tên Quản Trị</th><th>Quyền hạn</th><th>Hành động</th></tr>
-                    ${adminRows}
+                    ${adminRows ? adminRows : '<tr><td colspan="4" style="text-align:center;">Chưa cấu hình tài khoản admin</td></tr>'}
                 </table>`;
             break;
 
@@ -296,7 +287,11 @@ function showPage(page) {
             break;
     }
 
-    document.getElementById("pageContent").innerHTML = html;
+    // Đẩy toàn bộ mã HTML đã dựng động vào vùng chứa cốt lõi của Dashboard
+    const container = document.getElementById("pageContent");
+    if (container) {
+        container.innerHTML = html;
+    }
 }
 
 // ====================================================
